@@ -7,12 +7,12 @@
 
     <fragment
         android:id="@+id/homeFragment"
-        android:name="arbuz.android.groceryapp.presentation.HomeFragment"
+        android:name="arbuz.android.groceryapp.presentation.screen.HomeFragment"
         android:label="fragment_home"
         tools:layout="@layout/fragment_home" />
     <fragment
         android:id="@+id/cartFragment"
-        android:name="arbuz.android.groceryapp.CartFragment"
+        android:name="arbuz.android.groceryapp.presentation.screen.CartFragment"
         android:label="fragment_card"
         tools:layout="@layout/fragment_cart" />
 </navigation>
