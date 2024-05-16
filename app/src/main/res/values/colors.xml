@@ -10,4 +10,5 @@
     <color name="title">#000000</color>
     <color name="text">#868889</color>
     <color name="stroke_color">#DDDDDD</color>
+    <color name="stroke">#DDDDDD</color>
 </resources>
