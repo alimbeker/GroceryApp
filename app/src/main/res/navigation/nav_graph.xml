@@ -11,8 +11,8 @@
         android:label="fragment_home"
         tools:layout="@layout/fragment_home" />
     <fragment
-        android:id="@+id/cardFragment"
-        android:name="arbuz.android.groceryapp.CardFragment"
+        android:id="@+id/cartFragment"
+        android:name="arbuz.android.groceryapp.CartFragment"
         android:label="fragment_card"
-        tools:layout="@layout/fragment_card" />
+        tools:layout="@layout/fragment_cart" />
 </navigation>
