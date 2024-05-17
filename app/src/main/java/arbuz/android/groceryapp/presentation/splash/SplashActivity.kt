@@ -1,4 +1,4 @@
-package arbuz.android.groceryapp.presentation
+package arbuz.android.groceryapp.presentation.splash
 
 import android.annotation.SuppressLint
 import android.content.Intent
@@ -7,6 +7,7 @@ import android.os.CountDownTimer
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import arbuz.android.groceryapp.R
+import arbuz.android.groceryapp.presentation.MainActivity
 
 @SuppressLint("CustomSplashScreen")
 class SplashActivity : AppCompatActivity() {
