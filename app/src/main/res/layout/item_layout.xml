@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="165dp"
+    android:layout_height="212dp"
+    app:cardBackgroundColor="#D9D9D9"
+    app:cardCornerRadius="12dp">
+
+    <ImageView
+        android:layout_width="120dp"
+        android:layout_height="110dp"
+        android:layout_marginLeft="22dp"
+        android:layout_marginTop="31dp"
+        android:background="@color/white"
+        tools:src="@drawable/beans" />
+
+    <TextView
+        android:id="@+id/name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="22dp"
+        android:layout_marginTop="147dp"
+        android:text="@string/beans"
+        android:textSize="14sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="22dp"
+        android:layout_marginTop="170dp"
+        android:text="@string/price_of_bean"
+        android:textColor="@color/price_color"
+        android:textSize="14sp"
+        android:textStyle="bold" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/add_to_cart"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:layout_marginLeft="110dp"
+        android:layout_marginTop="170dp"
+        android:backgroundTint="@color/button_add_cart_color"
+        android:background="@drawable/circle_button_background" />
+
+    <ImageView
+        android:layout_width="16dp"
+        android:layout_height="16dp"
+        android:layout_marginTop="180dp"
+        android:layout_marginLeft="120dp"
+        android:src="@drawable/baseline_add_24"
+        />
+
+</com.google.android.material.card.MaterialCardView>

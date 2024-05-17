@@ -11,4 +11,6 @@
     <color name="text">#868889</color>
     <color name="stroke_color">#DDDDDD</color>
     <color name="stroke">#DDDDDD</color>
+    <color name="price_color">#FF324B</color>
+    <color name="button_add_cart_color">#009959</color>
 </resources>
