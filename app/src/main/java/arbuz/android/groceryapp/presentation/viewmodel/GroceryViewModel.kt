@@ -15,16 +15,20 @@ class GroceryViewModel(application: Application) : AndroidViewModel(application)
 
     val groceries: LiveData<List<Grocery>> = groceryDao.getAllGroceries().asLiveData()
 
-
     private val groceryList = listOf(
         Grocery(name = "Beans", price = 1.0, imageUrl = "file:///android_asset/beans.png"),
         Grocery(name = "Banana", price = 0.5, imageUrl = "file:///android_asset/banana.jpeg"),
-        Grocery(name = "Carrot", price = 0.7, imageUrl = "file:///android_asset/carrot.png")
-    )
+        Grocery(name = "Carrot", price = 0.7, imageUrl = "file:///android_asset/carrot.png"),
+        Grocery(name = "Peppers", price = 0.3, imageUrl = "file:///android_asset/peppers.png"),
+        Grocery(name = "Green Salad", price = 0.4, imageUrl = "file:///android_asset/green_salad.jpeg"),
+        Grocery(name = "Potatoes", price = 0.8, imageUrl = "file:///android_asset/potatoes.png"),
+        Grocery(name = "Onions", price = 0.2, imageUrl = "file:///android_asset/onions.png"),
+        )
 
     fun loadGroceries() {
-        if (groceries.value?.isEmpty() == true) {
+        if (groceries.value != groceryList) {
             viewModelScope.launch {
+                groceryDao.deleteAll()
                 groceryDao.insertAll(groceryList)
             }
         }
