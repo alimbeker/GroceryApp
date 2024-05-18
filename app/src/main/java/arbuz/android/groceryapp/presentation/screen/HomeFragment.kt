@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.GridLayoutManager
 import arbuz.android.groceryapp.databinding.FragmentHomeBinding
 import arbuz.android.groceryapp.presentation.adapter.GroceryAdapter
 import arbuz.android.groceryapp.presentation.viewmodel.GroceryViewModel
@@ -34,10 +34,15 @@ class HomeFragment : Fragment() {
     }
 
     private fun setupRecyclerView() {
-        adapter = GroceryAdapter()
-        binding.recyclerView.layoutManager = LinearLayoutManager(context)
+        adapter = GroceryAdapter(requireContext())
+        val spanCount = 2
+        val layoutManager = GridLayoutManager(context, spanCount)
+        layoutManager.orientation = GridLayoutManager.VERTICAL
+
+        binding.recyclerView.layoutManager = layoutManager
         binding.recyclerView.adapter = adapter
     }
+
 
     private fun observeData() {
         viewModel.groceries.observe(viewLifecycleOwner) { groceries ->
