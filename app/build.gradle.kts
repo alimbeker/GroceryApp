@@ -48,9 +48,16 @@ dependencies {
     implementation(libs.androidx.constraintlayout)
     implementation(libs.androidx.navigation.fragment.ktx)
     implementation(libs.androidx.navigation.ui.ktx)
+    implementation(libs.androidx.room.common)
+    implementation(libs.androidx.room.ktx)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
     implementation(libs.lottie)
     implementation (libs.material.v190)
+    implementation (libs.androidx.room.common)
+    implementation (libs.androidx.room.ktx)
+    implementation (libs.glide)
+
+
 }
