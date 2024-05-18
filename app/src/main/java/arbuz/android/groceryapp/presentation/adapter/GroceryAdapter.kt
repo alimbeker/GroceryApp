@@ -1,6 +1,5 @@
 package arbuz.android.groceryapp.presentation.adapter
 
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
@@ -23,7 +22,8 @@ class GroceryAdapter() : ListAdapter<Grocery, GroceryAdapter.ViewHolder>(Grocery
         holder.bind(grocery)
     }
 
-    inner class ViewHolder(private val binding: ItemLayoutBinding) : RecyclerView.ViewHolder(binding.root) {
+    inner class ViewHolder(private val binding: ItemLayoutBinding) :
+        RecyclerView.ViewHolder(binding.root) {
 
         fun bind(grocery: Grocery) {
             binding.name.text = grocery.name
@@ -31,7 +31,7 @@ class GroceryAdapter() : ListAdapter<Grocery, GroceryAdapter.ViewHolder>(Grocery
 
             // Load image using Glide
             Glide.with(binding.root.context)
-                .load("file:///android_asset/${grocery.imageUrl}")
+                .load(grocery.imageUrl)
                 .into(binding.image)
         }
     }

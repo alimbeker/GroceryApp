@@ -30,6 +30,7 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         setupRecyclerView()
         observeData()
+        viewModel.loadGroceries()
     }
 
     private fun setupRecyclerView() {
