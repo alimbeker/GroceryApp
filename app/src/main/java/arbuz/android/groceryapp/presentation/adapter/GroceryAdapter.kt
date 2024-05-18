@@ -1,4 +1,4 @@
-package arbuz.android.groceryapp.presentation
+package arbuz.android.groceryapp.presentation.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
