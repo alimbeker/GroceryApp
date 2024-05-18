@@ -27,7 +27,7 @@ class GroceryAdapter() : ListAdapter<Grocery, GroceryAdapter.ViewHolder>(Grocery
 
         fun bind(grocery: Grocery) {
             binding.name.text = grocery.name
-            binding.price.text = grocery.price.toString()
+            binding.price.text = "1kg, ${grocery.price}$"
 
             // Load image using Glide
             Glide.with(binding.root.context)

@@ -9,6 +9,7 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import arbuz.android.groceryapp.databinding.FragmentHomeBinding
 import arbuz.android.groceryapp.presentation.adapter.GroceryAdapter
+import arbuz.android.groceryapp.presentation.adapter.OffsetDecoration
 import arbuz.android.groceryapp.presentation.viewmodel.GroceryViewModel
 
 class HomeFragment : Fragment() {
@@ -40,6 +41,9 @@ class HomeFragment : Fragment() {
 
         binding.recyclerView.layoutManager = layoutManager
         binding.recyclerView.adapter = adapter
+
+        val offsetDecoration = OffsetDecoration(start = 20, top = 15, bottom = 15)
+        binding.recyclerView.addItemDecoration(offsetDecoration)
     }
 
 

@@ -23,6 +23,7 @@ class GroceryViewModel(application: Application) : AndroidViewModel(application)
         Grocery(name = "Green Salad", price = 0.4, imageUrl = "file:///android_asset/green_salad.jpeg"),
         Grocery(name = "Potatoes", price = 0.8, imageUrl = "file:///android_asset/potatoes.png"),
         Grocery(name = "Onions", price = 0.2, imageUrl = "file:///android_asset/onions.png"),
+
         )
 
     fun loadGroceries() {
