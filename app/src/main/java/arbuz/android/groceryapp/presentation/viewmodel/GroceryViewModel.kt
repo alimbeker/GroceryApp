@@ -23,7 +23,7 @@ class GroceryViewModel(application: Application) : AndroidViewModel(application)
     )
 
     fun loadGroceries() {
-        if (groceries.value == null) {
+        if (groceries.value?.isEmpty() == true) {
             viewModelScope.launch {
                 groceryDao.insertAll(groceryList)
             }
