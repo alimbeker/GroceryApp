@@ -30,13 +30,11 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         setupRecyclerView()
         observeData()
-        viewModel.loadGroceries() // Load the groceries when the view is created
     }
 
     private fun setupRecyclerView() {
-        adapter = GroceryAdapter(requireContext())
-        val spanCount = 2
-        val layoutManager = GridLayoutManager(context, spanCount)
+        adapter = GroceryAdapter()
+        val layoutManager = GridLayoutManager(context, 2)
         layoutManager.orientation = GridLayoutManager.VERTICAL
 
         binding.recyclerView.layoutManager = layoutManager

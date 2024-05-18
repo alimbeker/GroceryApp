@@ -11,7 +11,7 @@ import arbuz.android.groceryapp.databinding.ItemLayoutBinding
 import com.bumptech.glide.Glide
 
 
-class GroceryAdapter(private val context: Context) : ListAdapter<Grocery, GroceryAdapter.ViewHolder>(GroceryDiffCallback()) {
+class GroceryAdapter() : ListAdapter<Grocery, GroceryAdapter.ViewHolder>(GroceryDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding = ItemLayoutBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -30,7 +30,7 @@ class GroceryAdapter(private val context: Context) : ListAdapter<Grocery, Grocer
             binding.price.text = grocery.price.toString()
 
             // Load image using Glide
-            Glide.with(context)
+            Glide.with(binding.root.context)
                 .load("file:///android_asset/${grocery.imageUrl}")
                 .into(binding.image)
         }
