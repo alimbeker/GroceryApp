@@ -45,16 +45,16 @@ class GroceryViewModel(application: Application) : AndroidViewModel(application)
 
     fun addToCart(grocery: Grocery) {
         viewModelScope.launch {
-            grocery.quantityInCart++
-            repository.updateQuantityInCart(grocery.id, grocery.quantityInCart)
+            val newQuantity = grocery.quantityInCart + 1
+            repository.updateQuantityInCart(grocery.id, newQuantity)
         }
     }
 
     fun removeFromCart(grocery: Grocery) {
         viewModelScope.launch {
             if (grocery.quantityInCart > 0) {
-                grocery.quantityInCart--
-                repository.updateQuantityInCart(grocery.id, grocery.quantityInCart)
+                val newQuantity = grocery.quantityInCart - 1
+                repository.updateQuantityInCart(grocery.id, newQuantity)
             }
         }
     }
