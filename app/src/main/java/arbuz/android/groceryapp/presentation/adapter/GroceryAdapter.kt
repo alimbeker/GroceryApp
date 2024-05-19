@@ -7,10 +7,11 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import arbuz.android.groceryapp.data.database.Grocery
 import arbuz.android.groceryapp.databinding.ItemLayoutBinding
+import arbuz.android.groceryapp.presentation.listener.GroceryItemClickListener
 import com.bumptech.glide.Glide
 
 
-class GroceryAdapter() : ListAdapter<Grocery, GroceryAdapter.ViewHolder>(GroceryDiffCallback()) {
+class GroceryAdapter(private val listener: GroceryItemClickListener) : ListAdapter<Grocery, GroceryAdapter.ViewHolder>(GroceryDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding = ItemLayoutBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -24,15 +25,23 @@ class GroceryAdapter() : ListAdapter<Grocery, GroceryAdapter.ViewHolder>(Grocery
 
     inner class ViewHolder(private val binding: ItemLayoutBinding) :
         RecyclerView.ViewHolder(binding.root) {
-
         fun bind(grocery: Grocery) {
             binding.name.text = grocery.name
             binding.price.text = "1kg, ${grocery.price}$"
+            binding.quantityOfProduct.text = grocery.quantityInCart.toString()
 
             // Load image using Glide
             Glide.with(binding.root.context)
                 .load(grocery.imageUrl)
                 .into(binding.image)
+
+            binding.buttonAddToCart.setOnClickListener {
+                listener.onAddToCartClicked(grocery)
+            }
+
+            binding.buttonRemoveFromCart.setOnClickListener {
+                listener.onRemoveFromCartClicked(grocery)
+            }
         }
     }
 }

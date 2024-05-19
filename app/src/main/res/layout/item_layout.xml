@@ -55,7 +55,7 @@
              android:layout_gravity="end"
              />
          <TextView
-             android:id="@+id/quantity_of_card"
+             android:id="@+id/quantity_of_product"
              android:layout_width="wrap_content"
              android:layout_height="wrap_content"
              android:layout_gravity="center"
