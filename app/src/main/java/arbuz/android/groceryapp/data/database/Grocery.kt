@@ -8,5 +8,6 @@ data class Grocery(
     @PrimaryKey(autoGenerate = true) val id: Int = 0,
     val name: String,
     val price: Double,
-    val imageUrl: String
+    val imageUrl: String,
+    var quantityInCart: Int = 0
 )

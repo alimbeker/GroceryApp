@@ -16,4 +16,7 @@ interface GroceryDao {
 
     @Query("DELETE FROM grocery_table")
     suspend fun deleteAll()
+
+    @Query("UPDATE grocery_table SET quantityInCart = :quantity WHERE id = :id")
+    suspend fun updateQuantityInCart(id: Int, quantity: Int)
 }
