@@ -1,6 +1,7 @@
 package arbuz.android.groceryapp.presentation.viewmodel
 
 import android.app.Application
+import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.asLiveData
@@ -35,9 +36,8 @@ class GroceryViewModel(application: Application) : AndroidViewModel(application)
         )
 
     fun loadGroceries() {
-        if (groceries.value != groceryList) {
+        if (groceries.value?.isNotEmpty() == true) {
             viewModelScope.launch {
-                repository.deleteAll()
                 repository.insertAll(groceryList)
             }
         }
@@ -46,6 +46,7 @@ class GroceryViewModel(application: Application) : AndroidViewModel(application)
     fun addToCart(grocery: Grocery) {
         viewModelScope.launch {
             val newQuantity = grocery.quantityInCart + 1
+            Log.d("GroceryViewModel", "Adding to cart: id=${grocery.id}, newQuantity=$newQuantity")
             repository.updateQuantityInCart(grocery.id, newQuantity)
         }
     }
@@ -54,6 +55,7 @@ class GroceryViewModel(application: Application) : AndroidViewModel(application)
         viewModelScope.launch {
             if (grocery.quantityInCart > 0) {
                 val newQuantity = grocery.quantityInCart - 1
+                Log.d("GroceryViewModel", "Removing from cart: id=${grocery.id}, newQuantity=$newQuantity")
                 repository.updateQuantityInCart(grocery.id, newQuantity)
             }
         }

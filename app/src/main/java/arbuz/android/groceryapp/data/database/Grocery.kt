@@ -9,5 +9,6 @@ data class Grocery(
     val name: String,
     val price: Double,
     val imageUrl: String,
-    var quantityInCart: Int = 0
+    var quantityInCart: Int = 0,
+
 )
