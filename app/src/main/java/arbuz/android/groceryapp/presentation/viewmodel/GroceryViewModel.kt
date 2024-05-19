@@ -7,13 +7,21 @@ import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import arbuz.android.groceryapp.data.database.Grocery
 import arbuz.android.groceryapp.data.database.GroceryDatabase
+import arbuz.android.groceryapp.data.repository.GroceryRepository
 import kotlinx.coroutines.launch
 
 class GroceryViewModel(application: Application) : AndroidViewModel(application) {
 
-    private val groceryDao = GroceryDatabase.getDatabase(application).groceryDao()
+    private val repository: GroceryRepository
 
-    val groceries: LiveData<List<Grocery>> = groceryDao.getAllGroceries().asLiveData()
+    val groceries: LiveData<List<Grocery>>
+
+    init {
+        val groceryDao = GroceryDatabase.getDatabase(application).groceryDao()
+        repository = GroceryRepository(groceryDao)
+        groceries = repository.allGroceries.asLiveData()
+    }
+
 
     private val groceryList = listOf(
         Grocery(name = "Beans", price = 1.0, imageUrl = "file:///android_asset/beans.png"),
@@ -29,8 +37,8 @@ class GroceryViewModel(application: Application) : AndroidViewModel(application)
     fun loadGroceries() {
         if (groceries.value != groceryList) {
             viewModelScope.launch {
-                groceryDao.deleteAll()
-                groceryDao.insertAll(groceryList)
+                repository.deleteAll()
+                repository.insertAll(groceryList)
             }
         }
     }
