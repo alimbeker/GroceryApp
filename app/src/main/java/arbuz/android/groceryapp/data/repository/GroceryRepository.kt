@@ -15,4 +15,8 @@ class GroceryRepository(private val groceryDao: GroceryDao) {
     suspend fun deleteAll() {
         groceryDao.deleteAll()
     }
+
+    suspend fun updateQuantityInCart(id: Int, quantityInCart: Int) {
+        groceryDao.updateQuantityInCart(id, quantityInCart)
+    }
 }
