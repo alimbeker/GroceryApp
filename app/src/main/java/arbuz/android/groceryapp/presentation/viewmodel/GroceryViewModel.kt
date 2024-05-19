@@ -42,4 +42,20 @@ class GroceryViewModel(application: Application) : AndroidViewModel(application)
             }
         }
     }
+
+    fun addToCart(grocery: Grocery) {
+        viewModelScope.launch {
+            grocery.quantityInCart++
+            repository.updateQuantityInCart(grocery.id, grocery.quantityInCart)
+        }
+    }
+
+    fun removeFromCart(grocery: Grocery) {
+        viewModelScope.launch {
+            if (grocery.quantityInCart > 0) {
+                grocery.quantityInCart--
+                repository.updateQuantityInCart(grocery.id, grocery.quantityInCart)
+            }
+        }
+    }
 }
