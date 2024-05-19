@@ -7,12 +7,14 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
+import arbuz.android.groceryapp.data.database.Grocery
 import arbuz.android.groceryapp.databinding.FragmentHomeBinding
 import arbuz.android.groceryapp.presentation.adapter.GroceryAdapter
 import arbuz.android.groceryapp.presentation.adapter.OffsetDecoration
+import arbuz.android.groceryapp.presentation.listener.GroceryItemClickListener
 import arbuz.android.groceryapp.presentation.viewmodel.GroceryViewModel
 
-class HomeFragment : Fragment() {
+class HomeFragment : Fragment(), GroceryItemClickListener {
 
     private val viewModel: GroceryViewModel by viewModels()
     private var _binding: FragmentHomeBinding? = null
@@ -35,7 +37,7 @@ class HomeFragment : Fragment() {
     }
 
     private fun setupRecyclerView() {
-        adapter = GroceryAdapter()
+        adapter = GroceryAdapter(this)
         val layoutManager = GridLayoutManager(context, 2)
         layoutManager.orientation = GridLayoutManager.VERTICAL
 
@@ -51,6 +53,14 @@ class HomeFragment : Fragment() {
         viewModel.groceries.observe(viewLifecycleOwner) { groceries ->
             adapter.submitList(groceries)
         }
+    }
+
+    override fun onAddToCartClicked(grocery: Grocery) {
+        viewModel.addToCart(grocery)
+    }
+
+    override fun onRemoveFromCartClicked(grocery: Grocery) {
+        viewModel.removeFromCart(grocery)
     }
 
 
