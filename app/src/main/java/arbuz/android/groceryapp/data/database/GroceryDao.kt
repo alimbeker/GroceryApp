@@ -4,7 +4,6 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import arbuz.android.groceryapp.data.database.Grocery
 import kotlinx.coroutines.flow.Flow
 
 @Dao
