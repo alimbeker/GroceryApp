@@ -1,8 +1,8 @@
 plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsKotlinAndroid)
-    id ("kotlin-kapt")
-
+    alias(libs.plugins.kapt)
+    alias(libs.plugins.safeArgs)
 }
 
 android {
