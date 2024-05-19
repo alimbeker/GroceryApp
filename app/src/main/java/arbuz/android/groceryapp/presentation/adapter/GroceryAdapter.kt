@@ -25,6 +25,23 @@ class GroceryAdapter(private val listener: GroceryItemClickListener) : ListAdapt
 
     inner class ViewHolder(private val binding: ItemLayoutBinding) :
         RecyclerView.ViewHolder(binding.root) {
+        init {
+            binding.buttonAddToCart.setOnClickListener {
+                val position = adapterPosition
+                if (position != RecyclerView.NO_POSITION) {
+                    val grocery = getItem(position)
+                    listener.onAddToCartClicked(grocery)
+                }
+            }
+
+            binding.buttonRemoveFromCart.setOnClickListener {
+                val position = adapterPosition
+                if (position != RecyclerView.NO_POSITION) {
+                    val grocery = getItem(position)
+                    listener.onRemoveFromCartClicked(grocery)
+                }
+            }
+        }
         fun bind(grocery: Grocery) {
             binding.name.text = grocery.name
             binding.price.text = "1kg, ${grocery.price}$"
@@ -35,13 +52,6 @@ class GroceryAdapter(private val listener: GroceryItemClickListener) : ListAdapt
                 .load(grocery.imageUrl)
                 .into(binding.image)
 
-            binding.buttonAddToCart.setOnClickListener {
-                listener.onAddToCartClicked(grocery)
-            }
-
-            binding.buttonRemoveFromCart.setOnClickListener {
-                listener.onRemoveFromCartClicked(grocery)
-            }
         }
     }
 }
