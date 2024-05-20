@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import arbuz.android.groceryapp.data.database.Grocery
 import arbuz.android.groceryapp.databinding.FragmentCartBinding
 import arbuz.android.groceryapp.presentation.adapter.GroceryAdapter
+import arbuz.android.groceryapp.presentation.adapter.OffsetDecoration
 import arbuz.android.groceryapp.presentation.adapter.ViewType
 import arbuz.android.groceryapp.presentation.listener.GroceryItemClickListener
 import arbuz.android.groceryapp.presentation.viewmodel.GroceryViewModel
@@ -36,6 +37,9 @@ class CartFragment : Fragment(), GroceryItemClickListener {
         adapter = GroceryAdapter(ViewType.CART.ordinal,this)
         binding.recyclerView.layoutManager = LinearLayoutManager(context)
         binding.recyclerView.adapter = adapter
+
+        val offsetDecoration = OffsetDecoration(start = 3, top = 10, bottom = 10, end = 4)
+        binding.recyclerView.addItemDecoration(offsetDecoration)
     }
 
     private fun observeData() {
