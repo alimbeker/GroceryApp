@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".presentation.screen.CartFragment">
 
     <androidx.recyclerview.widget.RecyclerView
@@ -10,5 +11,39 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginBottom="65dp"/>
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:layout_marginLeft="12dp"
+        android:layout_marginRight="12dp"
+        app:cardBackgroundColor="@color/button_add_cart_color"
+        android:layout_marginBottom="85dp"
+        android:layout_gravity="bottom"
+        android:alpha="0.9"
+        app:cardCornerRadius="10dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/proceed_to_checkout"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:padding="5dp"
+            android:layout_gravity="top|center"
+            />
+        <TextView
+            android:id="@+id/total_check"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="1.00 $"
+            android:alpha="0.9"
+            android:textStyle="bold"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            android:padding="5dp"
+            android:layout_gravity="bottom|center"
+            />
+    </com.google.android.material.card.MaterialCardView>
 
 </FrameLayout>

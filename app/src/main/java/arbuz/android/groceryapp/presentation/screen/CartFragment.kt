@@ -22,7 +22,11 @@ class CartFragment : Fragment(), GroceryItemClickListener {
     private val binding get() = _binding!!
     private lateinit var adapter: GroceryAdapter
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
         _binding = FragmentCartBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -34,7 +38,7 @@ class CartFragment : Fragment(), GroceryItemClickListener {
     }
 
     private fun setupRecyclerView() {
-        adapter = GroceryAdapter(ViewType.CART.ordinal,this)
+        adapter = GroceryAdapter(ViewType.CART.ordinal, this)
         binding.recyclerView.layoutManager = LinearLayoutManager(context)
         binding.recyclerView.adapter = adapter
 
@@ -46,7 +50,16 @@ class CartFragment : Fragment(), GroceryItemClickListener {
         viewModel.groceries.observe(viewLifecycleOwner) { groceries ->
             val filteredGroceries = groceries.filter { it.quantityInCart > 0 }
             adapter.submitList(filteredGroceries)
+            calculateTotalPrice(filteredGroceries)
         }
+    }
+
+    private fun calculateTotalPrice(groceries: List<Grocery>) {
+        var totalPrice = 0.0
+        for (grocery in groceries) {
+            totalPrice += grocery.price * grocery.quantityInCart
+        }
+        binding.totalCheck.text = "${String.format("%.2f", totalPrice)} $"
     }
 
     override fun onAddToCartClicked(grocery: Grocery) {
