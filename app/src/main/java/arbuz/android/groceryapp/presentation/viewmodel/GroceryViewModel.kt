@@ -34,11 +34,7 @@ class GroceryViewModel(application: Application) : AndroidViewModel(application)
         Grocery(name = "Banana", price = 0.5, imageUrl = "file:///android_asset/banana.jpeg"),
         Grocery(name = "Carrot", price = 0.7, imageUrl = "file:///android_asset/carrot.png"),
         Grocery(name = "Peppers", price = 0.3, imageUrl = "file:///android_asset/peppers.png"),
-        Grocery(
-            name = "Green Salad",
-            price = 0.4,
-            imageUrl = "file:///android_asset/green_salad.jpeg"
-        ),
+        Grocery(name = "Green Salad", price = 0.4, imageUrl = "file:///android_asset/green_salad.jpeg"),
         Grocery(name = "Potatoes", price = 0.8, imageUrl = "file:///android_asset/potatoes.png"),
         Grocery(name = "Onions", price = 0.2, imageUrl = "file:///android_asset/onions.png"),
         Grocery(name = "Mushrooms", price = 0.9, imageUrl = "file:///android_asset/mushrooms.jpg"),
