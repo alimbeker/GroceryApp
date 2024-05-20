@@ -15,6 +15,7 @@ import com.bumptech.glide.Glide
 class GroceryAdapter(private val viewType: Int, private val listener: GroceryItemClickListener) :
     ListAdapter<Grocery, RecyclerView.ViewHolder>(GroceryDiffCallback()) {
 
+    var itemClick: ((Grocery) -> Unit)? = null
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
             ViewType.HOME.ordinal -> {
@@ -113,6 +114,10 @@ class GroceryAdapter(private val viewType: Int, private val listener: GroceryIte
             Glide.with(binding.root.context)
                 .load(grocery.imageUrl)
                 .into(binding.image)
+
+            binding.resetToZero.setOnClickListener {
+                itemClick?.invoke(grocery)
+            }
         }
     }
 }

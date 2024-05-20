@@ -35,6 +35,13 @@ class CartFragment : Fragment(), GroceryItemClickListener {
         super.onViewCreated(view, savedInstanceState)
         setupRecyclerView()
         observeData()
+        deleteButton()
+    }
+
+    private fun deleteButton() {
+        adapter.itemClick = { grocery ->
+            viewModel.resetToZero(grocery)
+        }
     }
 
     private fun setupRecyclerView() {

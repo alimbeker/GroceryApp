@@ -19,7 +19,6 @@ class GroceryViewModel(application: Application) : AndroidViewModel(application)
     val groceries: LiveData<List<Grocery>>
 
 
-
     init {
         val groceryDao = GroceryDatabase.getDatabase(application).groceryDao()
         repository = GroceryRepository(groceryDao)
@@ -35,7 +34,11 @@ class GroceryViewModel(application: Application) : AndroidViewModel(application)
         Grocery(name = "Banana", price = 0.5, imageUrl = "file:///android_asset/banana.jpeg"),
         Grocery(name = "Carrot", price = 0.7, imageUrl = "file:///android_asset/carrot.png"),
         Grocery(name = "Peppers", price = 0.3, imageUrl = "file:///android_asset/peppers.png"),
-        Grocery(name = "Green Salad", price = 0.4, imageUrl = "file:///android_asset/green_salad.jpeg"),
+        Grocery(
+            name = "Green Salad",
+            price = 0.4,
+            imageUrl = "file:///android_asset/green_salad.jpeg"
+        ),
         Grocery(name = "Potatoes", price = 0.8, imageUrl = "file:///android_asset/potatoes.png"),
         Grocery(name = "Onions", price = 0.2, imageUrl = "file:///android_asset/onions.png"),
         Grocery(name = "Mushrooms", price = 0.9, imageUrl = "file:///android_asset/mushrooms.jpg"),
@@ -52,14 +55,16 @@ class GroceryViewModel(application: Application) : AndroidViewModel(application)
     }
 
     private suspend fun insertGroceries(currentGroceries: List<Grocery>) {
-        val toAdd = groceryList.filter { newGrocery -> currentGroceries.none { it.name == newGrocery.name } }
+        val toAdd =
+            groceryList.filter { newGrocery -> currentGroceries.none { it.name == newGrocery.name } }
         toAdd.forEach { grocery ->
             repository.insert(grocery)
         }
     }
 
     private suspend fun deleteGroceries(currentGroceries: List<Grocery>) {
-        val toDelete = currentGroceries.filter { existingGrocery -> groceryList.none { it.name == existingGrocery.name } }
+        val toDelete =
+            currentGroceries.filter { existingGrocery -> groceryList.none { it.name == existingGrocery.name } }
         toDelete.forEach { grocery ->
             repository.delete(grocery)
         }
@@ -86,4 +91,12 @@ class GroceryViewModel(application: Application) : AndroidViewModel(application)
             }
         }
     }
+
+    fun resetToZero(grocery: Grocery) {
+        viewModelScope.launch {
+            val newQuantity = 0
+            repository.updateQuantityInCart(grocery.id, newQuantity)
+        }
+    }
+
 }
