@@ -116,7 +116,3 @@ class GroceryDiffCallback : DiffUtil.ItemCallback<Grocery>() {
         return oldItem == newItem
     }
 }
-
-enum class ViewType {
-    HOME, CART
-}
