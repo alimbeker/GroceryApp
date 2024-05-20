@@ -6,4 +6,5 @@
     <string name="cart">Cart</string>
     <string name="beans">Beans</string>
     <string name="price_of_bean">1kg, 4$</string>
+    <string name="go_to_checkout">Go to checkout</string>
 </resources>
