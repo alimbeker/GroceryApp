@@ -12,18 +12,26 @@ import arbuz.android.groceryapp.presentation.listener.GroceryItemClickListener
 import com.bumptech.glide.Glide
 
 
-class GroceryAdapter(private val viewType: Int, private val listener: GroceryItemClickListener) : ListAdapter<Grocery, RecyclerView.ViewHolder>(GroceryDiffCallback()) {
+class GroceryAdapter(private val viewType: Int, private val listener: GroceryItemClickListener) :
+    ListAdapter<Grocery, RecyclerView.ViewHolder>(GroceryDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
             ViewType.HOME.ordinal -> {
-                val binding = ItemLayoutBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+                val binding =
+                    ItemLayoutBinding.inflate(LayoutInflater.from(parent.context), parent, false)
                 HomeViewHolder(binding)
             }
+
             ViewType.CART.ordinal -> {
-                val binding = CartItemLayoutBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+                val binding = CartItemLayoutBinding.inflate(
+                    LayoutInflater.from(parent.context),
+                    parent,
+                    false
+                )
                 CartViewHolder(binding)
             }
+
             else -> throw IllegalArgumentException("Invalid view type")
         }
     }
@@ -96,7 +104,9 @@ class GroceryAdapter(private val viewType: Int, private val listener: GroceryIte
 
         fun bind(grocery: Grocery) {
             binding.name.text = grocery.name
-            binding.price.text = "1kg, ${grocery.price}$"
+            val totalPrice = if (grocery.quantityInCart > 0) grocery.price * grocery.quantityInCart else grocery.price
+            val totalWeight = if (grocery.quantityInCart > 0) grocery.quantityInCart else 1
+            binding.price.text = "${totalWeight}kg, ${String.format("%.2f", totalPrice)}$"
             binding.quantityOfProduct.text = grocery.quantityInCart.toString()
 
             // Load image using Glide
