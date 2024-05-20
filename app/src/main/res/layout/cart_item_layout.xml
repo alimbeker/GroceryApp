@@ -90,5 +90,15 @@
 
 
 
+        <ImageView
+            android:id="@+id/reset_to_zero"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_gravity="end"
+            android:layout_margin="12dp"
+            android:src="@drawable/cross"
+            />
+
+
     </FrameLayout>
 </androidx.cardview.widget.CardView>
