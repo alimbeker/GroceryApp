@@ -42,7 +42,7 @@ class CartFragment : Fragment(), GroceryItemClickListener {
         binding.recyclerView.layoutManager = LinearLayoutManager(context)
         binding.recyclerView.adapter = adapter
 
-        val offsetDecoration = OffsetDecoration(start = 3, top = 10, bottom = 10, end = 4)
+        val offsetDecoration = OffsetDecoration(start = 5, top = 10, bottom = 10, end = 5)
         binding.recyclerView.addItemDecoration(offsetDecoration)
     }
 
