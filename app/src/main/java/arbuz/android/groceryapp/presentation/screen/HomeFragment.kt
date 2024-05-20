@@ -11,6 +11,7 @@ import arbuz.android.groceryapp.data.database.Grocery
 import arbuz.android.groceryapp.databinding.FragmentHomeBinding
 import arbuz.android.groceryapp.presentation.adapter.GroceryAdapter
 import arbuz.android.groceryapp.presentation.adapter.OffsetDecoration
+import arbuz.android.groceryapp.presentation.adapter.ViewType
 import arbuz.android.groceryapp.presentation.listener.GroceryItemClickListener
 import arbuz.android.groceryapp.presentation.viewmodel.GroceryViewModel
 
@@ -36,7 +37,7 @@ class HomeFragment : Fragment(), GroceryItemClickListener {
     }
 
     private fun setupRecyclerView() {
-        adapter = GroceryAdapter(this)
+        adapter = GroceryAdapter(ViewType.HOME.ordinal,this)
         val layoutManager = GridLayoutManager(context, 2)
         layoutManager.orientation = GridLayoutManager.VERTICAL
 

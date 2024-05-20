@@ -12,7 +12,7 @@ import arbuz.android.groceryapp.presentation.listener.GroceryItemClickListener
 import com.bumptech.glide.Glide
 
 
-class GroceryAdapter(private val listener: GroceryItemClickListener) : ListAdapter<Grocery, RecyclerView.ViewHolder>(GroceryDiffCallback()) {
+class GroceryAdapter(private val viewType: Int, private val listener: GroceryItemClickListener) : ListAdapter<Grocery, RecyclerView.ViewHolder>(GroceryDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
@@ -37,8 +37,7 @@ class GroceryAdapter(private val listener: GroceryItemClickListener) : ListAdapt
     }
 
     override fun getItemViewType(position: Int): Int {
-        val grocery = getItem(position)
-        return if (grocery.quantityInCart > 0) ViewType.CART.ordinal else ViewType.HOME.ordinal
+        return viewType
     }
 
     inner class HomeViewHolder(private val binding: ItemLayoutBinding) :

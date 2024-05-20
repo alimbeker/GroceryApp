@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import arbuz.android.groceryapp.data.database.Grocery
 import arbuz.android.groceryapp.databinding.FragmentCartBinding
 import arbuz.android.groceryapp.presentation.adapter.GroceryAdapter
+import arbuz.android.groceryapp.presentation.adapter.ViewType
 import arbuz.android.groceryapp.presentation.listener.GroceryItemClickListener
 import arbuz.android.groceryapp.presentation.viewmodel.GroceryViewModel
 
@@ -32,7 +33,7 @@ class CartFragment : Fragment(), GroceryItemClickListener {
     }
 
     private fun setupRecyclerView() {
-        adapter = GroceryAdapter(this)
+        adapter = GroceryAdapter(ViewType.CART.ordinal,this)
         binding.recyclerView.layoutManager = LinearLayoutManager(context)
         binding.recyclerView.adapter = adapter
     }
