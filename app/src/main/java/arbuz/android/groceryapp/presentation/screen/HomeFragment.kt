@@ -33,7 +33,6 @@ class HomeFragment : Fragment(), GroceryItemClickListener {
         super.onViewCreated(view, savedInstanceState)
         setupRecyclerView()
         observeData()
-        viewModel.loadGroceries()
     }
 
     private fun setupRecyclerView() {

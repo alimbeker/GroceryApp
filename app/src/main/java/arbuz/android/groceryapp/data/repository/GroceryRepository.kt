@@ -13,8 +13,16 @@ class GroceryRepository(private val groceryDao: GroceryDao) {
         groceryDao.insertAll(groceries)
     }
 
+    suspend fun insert(grocery: Grocery) {
+        groceryDao.insert(grocery)
+    }
+
     suspend fun deleteAll() {
         groceryDao.deleteAll()
+    }
+
+    suspend fun delete(grocery: Grocery) {
+        groceryDao.delete(grocery)
     }
 
     suspend fun updateQuantityInCart(id: Int, quantityInCart: Int) {

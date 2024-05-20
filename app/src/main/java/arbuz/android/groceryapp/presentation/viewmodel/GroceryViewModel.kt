@@ -9,6 +9,7 @@ import androidx.lifecycle.viewModelScope
 import arbuz.android.groceryapp.data.database.Grocery
 import arbuz.android.groceryapp.data.database.GroceryDatabase
 import arbuz.android.groceryapp.data.repository.GroceryRepository
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 
 class GroceryViewModel(application: Application) : AndroidViewModel(application) {
@@ -17,10 +18,15 @@ class GroceryViewModel(application: Application) : AndroidViewModel(application)
 
     val groceries: LiveData<List<Grocery>>
 
+
+
     init {
         val groceryDao = GroceryDatabase.getDatabase(application).groceryDao()
         repository = GroceryRepository(groceryDao)
         groceries = repository.allGroceries.asLiveData()
+        viewModelScope.launch {
+            syncGroceries()
+        }
     }
 
 
@@ -32,16 +38,31 @@ class GroceryViewModel(application: Application) : AndroidViewModel(application)
         Grocery(name = "Green Salad", price = 0.4, imageUrl = "file:///android_asset/green_salad.jpeg"),
         Grocery(name = "Potatoes", price = 0.8, imageUrl = "file:///android_asset/potatoes.png"),
         Grocery(name = "Onions", price = 0.2, imageUrl = "file:///android_asset/onions.png"),
-
         )
 
-    fun loadGroceries() {
-        if (groceries.value?.isNotEmpty() == true) {
-            viewModelScope.launch {
-                repository.insertAll(groceryList)
-            }
+
+    private fun syncGroceries() {
+        viewModelScope.launch {
+            val currentGroceries = repository.allGroceries.first()
+            insertGroceries(currentGroceries)
+            deleteGroceries(currentGroceries)
         }
     }
+
+    private suspend fun insertGroceries(currentGroceries: List<Grocery>) {
+        val toAdd = groceryList.filter { newGrocery -> currentGroceries.none { it.name == newGrocery.name } }
+        toAdd.forEach { grocery ->
+            repository.insert(grocery)
+        }
+    }
+
+    private suspend fun deleteGroceries(currentGroceries: List<Grocery>) {
+        val toDelete = currentGroceries.filter { existingGrocery -> groceryList.none { it.name == existingGrocery.name } }
+        toDelete.forEach { grocery ->
+            repository.delete(grocery)
+        }
+    }
+
 
     fun addToCart(grocery: Grocery) {
         viewModelScope.launch {
@@ -55,7 +76,10 @@ class GroceryViewModel(application: Application) : AndroidViewModel(application)
         viewModelScope.launch {
             if (grocery.quantityInCart > 0) {
                 val newQuantity = grocery.quantityInCart - 1
-                Log.d("GroceryViewModel", "Removing from cart: id=${grocery.id}, newQuantity=$newQuantity")
+                Log.d(
+                    "GroceryViewModel",
+                    "Removing from cart: id=${grocery.id}, newQuantity=$newQuantity"
+                )
                 repository.updateQuantityInCart(grocery.id, newQuantity)
             }
         }
