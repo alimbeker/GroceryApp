@@ -6,25 +6,44 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import arbuz.android.groceryapp.data.database.Grocery
+import arbuz.android.groceryapp.databinding.CartItemLayoutBinding
 import arbuz.android.groceryapp.databinding.ItemLayoutBinding
 import arbuz.android.groceryapp.presentation.listener.GroceryItemClickListener
 import com.bumptech.glide.Glide
 
 
-class GroceryAdapter(private val listener: GroceryItemClickListener) : ListAdapter<Grocery, GroceryAdapter.ViewHolder>(GroceryDiffCallback()) {
+class GroceryAdapter(private val listener: GroceryItemClickListener) : ListAdapter<Grocery, RecyclerView.ViewHolder>(GroceryDiffCallback()) {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val binding = ItemLayoutBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return ViewHolder(binding)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+        return when (viewType) {
+            ViewType.HOME.ordinal -> {
+                val binding = ItemLayoutBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+                HomeViewHolder(binding)
+            }
+            ViewType.CART.ordinal -> {
+                val binding = CartItemLayoutBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+                CartViewHolder(binding)
+            }
+            else -> throw IllegalArgumentException("Invalid view type")
+        }
     }
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val grocery = getItem(position)
-        holder.bind(grocery)
+        when (holder) {
+            is HomeViewHolder -> holder.bind(grocery)
+            is CartViewHolder -> holder.bind(grocery)
+        }
     }
 
-    inner class ViewHolder(private val binding: ItemLayoutBinding) :
+    override fun getItemViewType(position: Int): Int {
+        val grocery = getItem(position)
+        return if (grocery.quantityInCart > 0) ViewType.CART.ordinal else ViewType.HOME.ordinal
+    }
+
+    inner class HomeViewHolder(private val binding: ItemLayoutBinding) :
         RecyclerView.ViewHolder(binding.root) {
+
         init {
             binding.buttonAddToCart.setOnClickListener {
                 val position = adapterPosition
@@ -42,6 +61,7 @@ class GroceryAdapter(private val listener: GroceryItemClickListener) : ListAdapt
                 }
             }
         }
+
         fun bind(grocery: Grocery) {
             binding.name.text = grocery.name
             binding.price.text = "1kg, ${grocery.price}$"
@@ -51,7 +71,39 @@ class GroceryAdapter(private val listener: GroceryItemClickListener) : ListAdapt
             Glide.with(binding.root.context)
                 .load(grocery.imageUrl)
                 .into(binding.image)
+        }
+    }
 
+    inner class CartViewHolder(private val binding: CartItemLayoutBinding) :
+        RecyclerView.ViewHolder(binding.root) {
+
+        init {
+            binding.buttonAddToCart.setOnClickListener {
+                val position = adapterPosition
+                if (position != RecyclerView.NO_POSITION) {
+                    val grocery = getItem(position)
+                    listener.onAddToCartClicked(grocery)
+                }
+            }
+
+            binding.buttonRemoveFromCart.setOnClickListener {
+                val position = adapterPosition
+                if (position != RecyclerView.NO_POSITION) {
+                    val grocery = getItem(position)
+                    listener.onRemoveFromCartClicked(grocery)
+                }
+            }
+        }
+
+        fun bind(grocery: Grocery) {
+            binding.name.text = grocery.name
+            binding.price.text = "1kg, ${grocery.price}$"
+            binding.quantityOfProduct.text = grocery.quantityInCart.toString()
+
+            // Load image using Glide
+            Glide.with(binding.root.context)
+                .load(grocery.imageUrl)
+                .into(binding.image)
         }
     }
 }
@@ -66,4 +118,6 @@ class GroceryDiffCallback : DiffUtil.ItemCallback<Grocery>() {
     }
 }
 
-
+enum class ViewType {
+    HOME, CART
+}
