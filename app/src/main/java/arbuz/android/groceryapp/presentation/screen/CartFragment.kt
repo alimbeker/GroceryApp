@@ -35,10 +35,10 @@ class CartFragment : Fragment(), GroceryItemClickListener {
         super.onViewCreated(view, savedInstanceState)
         setupRecyclerView()
         observeData()
-        deleteButton()
+        setupDeleteButton()
     }
 
-    private fun deleteButton() {
+    private fun setupDeleteButton() {
         adapter.itemClick = { grocery ->
             viewModel.resetToZero(grocery)
         }
@@ -62,11 +62,8 @@ class CartFragment : Fragment(), GroceryItemClickListener {
     }
 
     private fun calculateTotalPrice(groceries: List<Grocery>) {
-        var totalPrice = 0.0
-        for (grocery in groceries) {
-            totalPrice += grocery.price * grocery.quantityInCart
-        }
-        binding.totalCheck.text = "${String.format("%.2f", totalPrice)} $"
+        val totalPrice = groceries.sumOf { it.price * it.quantityInCart }
+        binding.totalCheck.text = String.format("%.2f $", totalPrice)
     }
 
     override fun onAddToCartClicked(grocery: Grocery) {
