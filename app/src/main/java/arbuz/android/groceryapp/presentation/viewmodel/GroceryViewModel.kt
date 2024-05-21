@@ -30,15 +30,14 @@ class GroceryViewModel(application: Application) : AndroidViewModel(application)
 
 
     private val groceryList = listOf(
-        Grocery(name = "Beans", price = 1.0, imageUrl = "file:///android_asset/beans.png"),
-        Grocery(name = "Banana", price = 0.5, imageUrl = "file:///android_asset/banana.jpeg"),
-        Grocery(name = "Carrot", price = 0.7, imageUrl = "file:///android_asset/carrot.png"),
-        Grocery(name = "Peppers", price = 0.3, imageUrl = "file:///android_asset/peppers.png"),
-        Grocery(name = "Green Salad", price = 0.4, imageUrl = "file:///android_asset/green_salad.jpeg"),
-        Grocery(name = "Potatoes", price = 0.8, imageUrl = "file:///android_asset/potatoes.png"),
-        Grocery(name = "Onions", price = 0.2, imageUrl = "file:///android_asset/onions.png"),
-        Grocery(name = "Mushrooms", price = 0.9, imageUrl = "file:///android_asset/mushrooms.jpg"),
-
+        Grocery(1,name = "Beans", price = 1.0, imageUrl = "file:///android_asset/beans.png"),
+        Grocery(2,name = "Banana", price = 0.5, imageUrl = "file:///android_asset/banana.jpeg"),
+        Grocery(3,name = "Carrot", price = 0.7, imageUrl = "file:///android_asset/carrot.png"),
+        Grocery(4,name = "Peppers", price = 0.3, imageUrl = "file:///android_asset/peppers.png"),
+        Grocery(5,name = "Green Salad", price = 0.4, imageUrl = "file:///android_asset/green_salad.jpeg"),
+        Grocery(6,name = "Potatoes", price = 0.8, imageUrl = "file:///android_asset/potatoes.png"),
+        Grocery(7,name = "Onions", price = 0.2, imageUrl = "file:///android_asset/onions.png"),
+        Grocery(8,name = "Mushrooms", price = 0.9, imageUrl = "file:///android_asset/mushrooms.jpg"),
         )
 
 
@@ -52,7 +51,7 @@ class GroceryViewModel(application: Application) : AndroidViewModel(application)
 
     private suspend fun insertGroceries(currentGroceries: List<Grocery>) {
         val toAdd =
-            groceryList.filter { newGrocery -> currentGroceries.none { it.name == newGrocery.name } }
+            groceryList.filter { newGrocery -> currentGroceries.none { it.id == newGrocery.id } }
         toAdd.forEach { grocery ->
             repository.insert(grocery)
         }
@@ -60,7 +59,7 @@ class GroceryViewModel(application: Application) : AndroidViewModel(application)
 
     private suspend fun deleteGroceries(currentGroceries: List<Grocery>) {
         val toDelete =
-            currentGroceries.filter { existingGrocery -> groceryList.none { it.name == existingGrocery.name } }
+            currentGroceries.filter { existingGrocery -> groceryList.none { it.id == existingGrocery.id } }
         toDelete.forEach { grocery ->
             repository.delete(grocery)
         }
