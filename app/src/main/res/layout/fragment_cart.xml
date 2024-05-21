@@ -14,7 +14,7 @@
 
     <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
-        android:layout_height="55dp"
+        android:layout_height="58dp"
         android:layout_marginLeft="12dp"
         android:layout_marginRight="12dp"
         app:cardBackgroundColor="@color/button_add_cart_color"
