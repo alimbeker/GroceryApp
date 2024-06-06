@@ -16,6 +16,7 @@ class GroceryAdapter(private val viewType: Int, private val listener: GroceryIte
     ListAdapter<Grocery, RecyclerView.ViewHolder>(GroceryDiffCallback()) {
 
     var itemClick: ((Grocery) -> Unit)? = null
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
             ViewType.HOME.ordinal -> {
@@ -45,11 +46,29 @@ class GroceryAdapter(private val viewType: Int, private val listener: GroceryIte
         }
     }
 
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int, payloads: MutableList<Any>) {
+        if (payloads.isNotEmpty()) {
+            val payload = payloads[0] as Int
+            when (holder) {
+                is HomeViewHolder -> {
+                    // Update only the quantity text
+                    holder.binding.quantityOfProduct.text = payload.toString()
+                }
+                is CartViewHolder -> {
+                    // Update only the quantity text
+                    holder.binding.quantityOfProduct.text = payload.toString()
+                }
+            }
+        } else {
+            super.onBindViewHolder(holder, position, payloads)
+        }
+    }
+
     override fun getItemViewType(position: Int): Int {
         return viewType
     }
 
-    inner class HomeViewHolder(private val binding: ItemLayoutBinding) :
+    inner class HomeViewHolder(val binding: ItemLayoutBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
         init {
@@ -73,6 +92,8 @@ class GroceryAdapter(private val viewType: Int, private val listener: GroceryIte
         fun bind(grocery: Grocery) {
             binding.name.text = grocery.name
             binding.price.text = "1kg, ${grocery.price}$"
+
+            // Only update the quantity text
             binding.quantityOfProduct.text = grocery.quantityInCart.toString()
 
             // Load image using Glide
@@ -82,7 +103,7 @@ class GroceryAdapter(private val viewType: Int, private val listener: GroceryIte
         }
     }
 
-    inner class CartViewHolder(private val binding: CartItemLayoutBinding) :
+    inner class CartViewHolder(val binding: CartItemLayoutBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
         init {
@@ -108,6 +129,8 @@ class GroceryAdapter(private val viewType: Int, private val listener: GroceryIte
             val totalPrice = if (grocery.quantityInCart > 0) grocery.price * grocery.quantityInCart else grocery.price
             val totalWeight = if (grocery.quantityInCart > 0) grocery.quantityInCart else 1
             binding.price.text = "${totalWeight}kg, ${String.format("%.2f", totalPrice)}$"
+
+            // Only update the quantity text
             binding.quantityOfProduct.text = grocery.quantityInCart.toString()
 
             // Load image using Glide
@@ -129,5 +152,14 @@ class GroceryDiffCallback : DiffUtil.ItemCallback<Grocery>() {
 
     override fun areContentsTheSame(oldItem: Grocery, newItem: Grocery): Boolean {
         return oldItem == newItem
+    }
+
+    override fun getChangePayload(oldItem: Grocery, newItem: Grocery): Any? {
+        // Return the payload if the content of the items is different
+        return if (oldItem.quantityInCart != newItem.quantityInCart) {
+            newItem.quantityInCart
+        } else {
+            null
+        }
     }
 }
