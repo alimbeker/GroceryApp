@@ -57,15 +57,18 @@ class CartFragment : Fragment(), GroceryItemClickListener {
         viewModel.groceries.observe(viewLifecycleOwner) { groceries ->
             val filteredGroceries = groceries.filter { it.quantityInCart > 0 }
             adapter.submitList(filteredGroceries)
-            calculateTotalPrice(filteredGroceries)
+            updateTotalPrice(filteredGroceries)
         }
     }
 
-    private fun calculateTotalPrice(groceries: List<Grocery>) {
-        val totalPrice = groceries.sumOf { it.price * it.quantityInCart }
+    private fun updateTotalPrice(groceries: List<Grocery>) {
+        val totalPrice = calculateTotalPrice(groceries)
         binding.totalCheck.text = String.format("%.2f $", totalPrice)
     }
 
+    private fun calculateTotalPrice(groceries: List<Grocery>): Double {
+        return groceries.sumOf { it.price * it.quantityInCart }
+    }
     override fun onAddToCartClicked(grocery: Grocery) {
         viewModel.addToCart(grocery)
     }
