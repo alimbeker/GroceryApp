@@ -3,6 +3,8 @@ plugins {
     alias(libs.plugins.jetbrainsKotlinAndroid)
     alias(libs.plugins.kapt)
     alias(libs.plugins.safeArgs)
+    alias(libs.plugins.dagger.hilt.android)
+
 }
 
 android {
@@ -29,11 +31,11 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_18
+        targetCompatibility = JavaVersion.VERSION_18
     }
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = "18"
     }
 
     buildFeatures {
@@ -81,5 +83,9 @@ dependencies {
 
     //Splash Screen
     implementation (libs.androidx.core.splashscreen)
+
+    //hilt
+    implementation(libs.dagger.hilt.android)
+    kapt(libs.dagger.hilt.compiler)
 
 }
