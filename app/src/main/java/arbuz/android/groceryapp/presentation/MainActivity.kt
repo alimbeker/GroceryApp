@@ -3,6 +3,8 @@ package arbuz.android.groceryapp.presentation
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.splashscreen.SplashScreen
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import arbuz.android.groceryapp.R
@@ -16,11 +18,15 @@ class MainActivity : AppCompatActivity() {
     private val viewModel: GroceryViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        val splashScreen = installSplashScreen()
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
-
         setupBottomNavigationView()
         observeData()
+
+        splashScreen.setOnExitAnimationListener { splashScreenView ->
+            splashScreenView.remove()
+        }
     }
 
     private fun observeData() {

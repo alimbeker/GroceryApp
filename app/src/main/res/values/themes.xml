@@ -16,6 +16,13 @@
         <item name="android:textSize">13sp</item>
     </style>
 
+    <style name="Theme.GroceryApp.Splash" parent="Theme.SplashScreen">
+        <!-- Customize your splash screen -->
+        <item name="windowSplashScreenBackground">@color/white</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/logo</item>
+        <item name="windowSplashScreenAnimationDuration">1200</item>
+        <item name="postSplashScreenTheme">@style/Theme.GroceryApp</item>
+    </style>
 
 
 </resources>

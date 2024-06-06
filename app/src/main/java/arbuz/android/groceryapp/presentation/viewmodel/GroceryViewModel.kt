@@ -38,6 +38,7 @@ class GroceryViewModel(application: Application) : AndroidViewModel(application)
         Grocery(6,name = "Potatoes", price = 0.8, imageUrl = "file:///android_asset/potatoes.png"),
         Grocery(7,name = "Onions", price = 0.2, imageUrl = "file:///android_asset/onions.png"),
         Grocery(8,name = "Mushrooms", price = 0.9, imageUrl = "file:///android_asset/mushrooms.jpg"),
+
         )
 
 
