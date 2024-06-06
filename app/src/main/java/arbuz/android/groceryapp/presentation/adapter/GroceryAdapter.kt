@@ -51,12 +51,10 @@ class GroceryAdapter(private val viewType: Int, private val listener: GroceryIte
             val payload = payloads[0] as Int
             when (holder) {
                 is HomeViewHolder -> {
-                    // Update only the quantity text
-                    holder.binding.quantityOfProduct.text = payload.toString()
+                    holder.bindPayload(payload)
                 }
                 is CartViewHolder -> {
-                    // Update only the quantity text
-                    holder.binding.quantityOfProduct.text = payload.toString()
+                    holder.bindPayload(payload)
                 }
             }
         } else {
@@ -92,14 +90,16 @@ class GroceryAdapter(private val viewType: Int, private val listener: GroceryIte
         fun bind(grocery: Grocery) {
             binding.name.text = grocery.name
             binding.price.text = "1kg, ${grocery.price}$"
-
-            // Only update the quantity text
             binding.quantityOfProduct.text = grocery.quantityInCart.toString()
 
             // Load image using Glide
             Glide.with(binding.root.context)
                 .load(grocery.imageUrl)
                 .into(binding.image)
+        }
+
+        fun bindPayload(payload: Int) {
+            binding.quantityOfProduct.text = payload.toString()
         }
     }
 
@@ -129,8 +129,6 @@ class GroceryAdapter(private val viewType: Int, private val listener: GroceryIte
             val totalPrice = if (grocery.quantityInCart > 0) grocery.price * grocery.quantityInCart else grocery.price
             val totalWeight = if (grocery.quantityInCart > 0) grocery.quantityInCart else 1
             binding.price.text = "${totalWeight}kg, ${String.format("%.2f", totalPrice)}$"
-
-            // Only update the quantity text
             binding.quantityOfProduct.text = grocery.quantityInCart.toString()
 
             // Load image using Glide
@@ -141,6 +139,16 @@ class GroceryAdapter(private val viewType: Int, private val listener: GroceryIte
             binding.resetToZero.setOnClickListener {
                 itemClick?.invoke(grocery)
             }
+        }
+
+        fun bindPayload(payload: Int) {
+            binding.quantityOfProduct.text = payload.toString()
+
+            // Update the price text if needed
+            val grocery = getItem(adapterPosition)
+            val totalPrice = if (payload > 0) grocery.price * payload else grocery.price
+            val totalWeight = if (payload > 0) payload else 1
+            binding.price.text = "${totalWeight}kg, ${String.format("%.2f", totalPrice)}$"
         }
     }
 }
