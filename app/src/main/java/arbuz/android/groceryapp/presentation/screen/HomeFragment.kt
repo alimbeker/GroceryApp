@@ -16,7 +16,9 @@ import arbuz.android.groceryapp.presentation.listener.GroceryItemClickListener
 import arbuz.android.groceryapp.presentation.listener.GroceryViewContract
 import arbuz.android.groceryapp.presentation.listener.GroceryViewEvent
 import arbuz.android.groceryapp.presentation.viewmodel.GroceryViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class HomeFragment : Fragment(), GroceryItemClickListener, GroceryViewContract {
 
     private val viewModel: GroceryViewModel by viewModels()

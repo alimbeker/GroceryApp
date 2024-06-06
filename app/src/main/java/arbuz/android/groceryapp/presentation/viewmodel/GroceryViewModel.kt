@@ -1,30 +1,26 @@
 package arbuz.android.groceryapp.presentation.viewmodel
 
-import android.app.Application
 import android.util.Log
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import arbuz.android.groceryapp.data.database.Grocery
-import arbuz.android.groceryapp.data.database.GroceryDatabase
 import arbuz.android.groceryapp.data.repository.GroceryRepository
-import arbuz.android.groceryapp.presentation.listener.GroceryViewContract
-import arbuz.android.groceryapp.presentation.listener.GroceryViewEvent
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class GroceryViewModel(application: Application) : AndroidViewModel(application) {
-
+@HiltViewModel
+class GroceryViewModel @Inject constructor(
     private val repository: GroceryRepository
+) : ViewModel() {
 
-    val groceries: LiveData<List<Grocery>>
+    val groceries: LiveData<List<Grocery>> = repository.allGroceries.asLiveData()
 
 
     init {
-        val groceryDao = GroceryDatabase.getDatabase(application).groceryDao()
-        repository = GroceryRepository(groceryDao)
-        groceries = repository.allGroceries.asLiveData()
         viewModelScope.launch {
             syncGroceries()
         }

@@ -4,8 +4,9 @@ import android.util.Log
 import arbuz.android.groceryapp.data.database.Grocery
 import arbuz.android.groceryapp.data.database.GroceryDao
 import kotlinx.coroutines.flow.Flow
+import javax.inject.Inject
 
-class GroceryRepository(private val groceryDao: GroceryDao) {
+class GroceryRepository @Inject constructor(private val groceryDao: GroceryDao) {
 
     val allGroceries: Flow<List<Grocery>> = groceryDao.getAllGroceries()
 

@@ -11,7 +11,9 @@ import arbuz.android.groceryapp.R
 import arbuz.android.groceryapp.databinding.ActivityMainBinding
 import arbuz.android.groceryapp.presentation.viewmodel.GroceryViewModel
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
     private val binding by lazy { ActivityMainBinding.inflate(layoutInflater) }
     private lateinit var navController: NavController
