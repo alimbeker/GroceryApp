@@ -13,9 +13,11 @@ import arbuz.android.groceryapp.presentation.adapter.GroceryAdapter
 import arbuz.android.groceryapp.presentation.adapter.OffsetDecoration
 import arbuz.android.groceryapp.presentation.adapter.ViewType
 import arbuz.android.groceryapp.presentation.listener.GroceryItemClickListener
+import arbuz.android.groceryapp.presentation.listener.GroceryViewContract
+import arbuz.android.groceryapp.presentation.listener.GroceryViewEvent
 import arbuz.android.groceryapp.presentation.viewmodel.GroceryViewModel
 
-class CartFragment : Fragment(), GroceryItemClickListener {
+class CartFragment : Fragment(), GroceryItemClickListener, GroceryViewContract {
 
     private val viewModel: GroceryViewModel by viewModels()
     private var _binding: FragmentCartBinding? = null
@@ -40,7 +42,7 @@ class CartFragment : Fragment(), GroceryItemClickListener {
 
     private fun setupDeleteButton() {
         adapter.itemClick = { grocery ->
-            viewModel.resetToZero(grocery)
+            send(GroceryViewEvent.ResetToZero(grocery))
         }
     }
 
@@ -70,13 +72,20 @@ class CartFragment : Fragment(), GroceryItemClickListener {
         return groceries.sumOf { it.price * it.quantityInCart }
     }
     override fun onAddToCartClicked(grocery: Grocery) {
-        viewModel.addToCart(grocery)
+        send(GroceryViewEvent.AddToCart(grocery))
     }
 
     override fun onRemoveFromCartClicked(grocery: Grocery) {
-        viewModel.removeFromCart(grocery)
+        send(GroceryViewEvent.RemoveFromCart(grocery))
     }
 
+    override fun send(event: GroceryViewEvent) {
+        when (event) {
+            is GroceryViewEvent.AddToCart -> viewModel.addToCart(event.grocery)
+            is GroceryViewEvent.RemoveFromCart -> viewModel.removeFromCart(event.grocery)
+            is GroceryViewEvent.ResetToZero -> viewModel.resetToZero(event.grocery)
+        }
+    }
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
